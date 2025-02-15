@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  mariadb:
+    image: mariadb:10.8.3-jammy
+    container_name: proyect_repo_app_mariadb
+    restart: always
+    environment:
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+    ports:
+      - '33066:3306'
+    networks:
+      - proyect_repo_app_network
+    volumes:
+      - proyect_repo_app_mariadb-data:/var/lib/mysql
+      - proyect_repo_app_mariadb-config:/etc/mysql
+
+networks:
+  proyect_repo_app_network:
+
+volumes:
+  proyect_repo_app_mariadb-data:
+  proyect_repo_app_mariadb-config:
