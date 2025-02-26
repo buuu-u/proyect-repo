@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,7 @@
             --success-color: #28a745;
             --error-color: #dc3545;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
@@ -28,7 +29,7 @@
             background-color: var(--primary-blue);
             color: white;
             font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .institutional-nav .nav-link {
@@ -65,7 +66,7 @@
             margin-bottom: 2rem;
             text-align: center;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .form-control {
@@ -108,12 +109,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
             transition: all 0.6s;
         }
 
@@ -279,8 +278,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fade-in {
@@ -294,6 +300,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Institutional Navigation -->
     <nav class="institutional-nav">
@@ -320,36 +327,57 @@
                 <div class="col-md-6">
                     <div class="login-container fade-in">
                         <h2 class="login-title">Iniciar Sesión</h2>
-                        <form>
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf <!-- Token CSRF -->
+
+                            <!-- Campo de correo electrónico -->
                             <div class="mb-4">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" required>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                             </div>
+
+                            <!-- Campo de contraseña -->
                             <div class="mb-4">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" required>
+                                    <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
                             </div>
+
+                            <!-- Opciones de inicio de sesión -->
                             <div class="login-options mb-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
                                     <label class="form-check-label" for="rememberMe">
                                         Recordarme
                                     </label>
                                 </div>
                                 <a href="#">¿Olvidaste tu contraseña?</a>
                             </div>
+
+                            <!-- Botón de inicio de sesión -->
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                             </button>
                         </form>
+
                         <div class="text-center mt-4">
-                            <p>¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+                            <p>¿No tienes una cuenta? <a href="{{ route('register') }}">Regístrate</a></p>
                         </div>
                         <div class="social-login">
                             <p class="text-center mb-3">O inicia sesión con:</p>
@@ -406,42 +434,30 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-                console.log('Datos del formulario:', data);
-                // Aquí iría la lógica para enviar los datos al servidor
-                alert('Inicio de sesión exitoso');
-                form.reset();
+        // Animación para los campos de formulario
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-5px)';
+                this.parentElement.style.transition = 'all 0.3s ease';
             });
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
 
-            // Animación para los campos de formulario
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'translateY(-5px)';
-                    this.parentElement.style.transition = 'all 0.3s ease';
-                });
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'translateY(0)';
-                });
-            });
-
-            // Efecto hover para los botones de redes sociales
-            const socialIcons = document.querySelectorAll('.social-icons a');
-            socialIcons.forEach(icon => {
-                icon.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-3px) rotate(5deg)';
-                });
-                icon.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) rotate(0)';
-                });
-            });
+        // Efecto hover para los botones de redes sociales
+        const socialIcons = document.querySelectorAll('.social-icons a');
+        socialIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) rotate(5deg)';
+        });
+        icon.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) rotate(0)';
+        });
+        });
         });
     </script>
 </body>
-</html>
 
+</html>
