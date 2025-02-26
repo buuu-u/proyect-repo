@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,7 @@
             --success-color: #28a745;
             --error-color: #dc3545;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
@@ -28,7 +29,7 @@
             background-color: var(--primary-blue);
             color: white;
             font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .institutional-nav .nav-link {
@@ -65,7 +66,7 @@
             margin-bottom: 2rem;
             text-align: center;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .form-control {
@@ -108,12 +109,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
             transition: all 0.6s;
         }
 
@@ -185,8 +184,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fade-in {
@@ -280,6 +286,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Institutional Navigation -->
     <nav class="institutional-nav">
@@ -323,42 +330,46 @@
                                 </button>
                             </li>
                         </ul>
+
                         <div class="tab-content" id="registerTabsContent">
+                            <!-- Formulario de Profesor -->
                             <div class="tab-pane fade show active" id="profesor" role="tabpanel" aria-labelledby="profesor-tab">
-                                <form id="profesorForm">
+                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <input type="hidden" name="user_type" value="profesor">
                                     <div class="mb-3">
-                                        <label for="profesorNombre" class="form-label">Nombre completo</label>
+                                        <label for="name" class="form-label">Nombre completo</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" id="profesorNombre" required>
+                                            <input type="text" class="form-control" id="name" name="name" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="profesorEmail" class="form-label">Correo electrónico institucional</label>
+                                        <label for="email" class="form-label">Correo electrónico institucional</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="email" class="form-control" id="profesorEmail" required>
+                                            <input type="email" class="form-control" id="email" name="email" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="profesorDepartamento" class="form-label">Departamento</label>
+                                        <label for="departamento" class="form-label">Departamento</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                            <input type="text" class="form-control" id="profesorDepartamento" required>
+                                            <input type="text" class="form-control" id="departamento" name="departamento" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="profesorContraseña" class="form-label">Contraseña</label>
+                                        <label for="password" class="form-label">Contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="profesorContraseña" required>
+                                            <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="profesorConfirmarContraseña" class="form-label">Confirmar contraseña</label>
+                                        <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="profesorConfirmarContraseña" required>
+                                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100">
@@ -366,48 +377,52 @@
                                     </button>
                                 </form>
                             </div>
+
+                            <!-- Formulario de Estudiante -->
                             <div class="tab-pane fade" id="estudiante" role="tabpanel" aria-labelledby="estudiante-tab">
-                                <form id="estudianteForm">
+                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <input type="hidden" name="user_type" value="estudiante">
                                     <div class="mb-3">
-                                        <label for="estudianteNombre" class="form-label">Nombre completo</label>
+                                        <label for="name" class="form-label">Nombre completo</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" id="estudianteNombre" required>
+                                            <input type="text" class="form-control" id="name" name="name" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="estudianteEmail" class="form-label">Correo electrónico institucional</label>
+                                        <label for="email" class="form-label">Correo electrónico institucional</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="email" class="form-control" id="estudianteEmail" required>
+                                            <input type="email" class="form-control" id="email" name="email" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="estudianteCarrera" class="form-label">Carrera</label>
+                                        <label for="carrera" class="form-label">Carrera</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
-                                            <input type="text" class="form-control" id="estudianteCarrera" required>
+                                            <input type="text" class="form-control" id="carrera" name="carrera" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="estudianteMatricula" class="form-label">Número de matrícula</label>
+                                        <label for="matricula" class="form-label">Número de matrícula</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                            <input type="text" class="form-control" id="estudianteMatricula" required>
+                                            <input type="text" class="form-control" id="matricula" name="matricula" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="estudianteContraseña" class="form-label">Contraseña</label>
+                                        <label for="password" class="form-label">Contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="estudianteContraseña" required>
+                                            <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="estudianteConfirmarContraseña" class="form-label">Confirmar contraseña</label>
+                                        <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="estudianteConfirmarContraseña" required>
+                                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100">
@@ -415,48 +430,52 @@
                                     </button>
                                 </form>
                             </div>
+
+                            <!-- Formulario de Usuario Externo -->
                             <div class="tab-pane fade" id="externo" role="tabpanel" aria-labelledby="externo-tab">
-                                <form id="externoForm">
+                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <input type="hidden" name="user_type" value="externo">
                                     <div class="mb-3">
-                                        <label for="externoNombre" class="form-label">Nombre completo</label>
+                                        <label for="name" class="form-label">Nombre completo</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" id="externoNombre" required>
+                                            <input type="text" class="form-control" id="name" name="name" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="externoEmail" class="form-label">Correo electrónico</label>
+                                        <label for="email" class="form-label">Correo electrónico</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="email" class="form-control" id="externoEmail" required>
+                                            <input type="email" class="form-control" id="email" name="email" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="externoInstitucion" class="form-label">Institución o empresa</label>
+                                        <label for="institucion" class="form-label">Institución o empresa</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                            <input type="text" class="form-control" id="externoInstitucion" required>
+                                            <input type="text" class="form-control" id="institucion" name="institucion" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="externoProfesion" class="form-label">Profesión o cargo</label>
+                                        <label for="profesion" class="form-label">Profesión o cargo</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                                            <input type="text" class="form-control" id="externoProfesion" required>
+                                            <input type="text" class="form-control" id="profesion" name="profesion" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="externoContraseña" class="form-label">Contraseña</label>
+                                        <label for="password" class="form-label">Contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="externoContraseña" required>
+                                            <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="externoConfirmarContraseña" class="form-label">Confirmar contraseña</label>
+                                        <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="externoConfirmarContraseña" required>
+                                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100">
@@ -502,7 +521,7 @@
                 </div>
             </div>
             <hr class="mt-4 mb-3">
-            <p class="text-center mb-0">&copy; 2023 Repositorio Académico Digital. Todos los derechos reservados.</p>
+            <p class="text-center mb-0">&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -510,17 +529,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    const data = Object.fromEntries(formData);
-                    console.log('Datos del formulario:', data);
-                    // Aquí iría la lógica para enviar los datos al servidor
-                    alert('Registro exitoso');
-                    form.reset();
-                });
-            });
 
             // Animación para los campos de formulario
             const inputs = document.querySelectorAll('.form-control');
@@ -582,5 +590,5 @@
         });
     </script>
 </body>
-</html>
 
+</html>

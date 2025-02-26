@@ -434,28 +434,31 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Animación para los campos de formulario
-        const inputs = document.querySelectorAll('.form-control');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'translateY(-5px)';
-                this.parentElement.style.transition = 'all 0.3s ease';
-            });
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'translateY(0)';
-            });
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
 
-        // Efecto hover para los botones de redes sociales
-        const socialIcons = document.querySelectorAll('.social-icons a');
-        socialIcons.forEach(icon => {
-        icon.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-3px) rotate(5deg)';
-        });
-        icon.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) rotate(0)';
-        });
-        });
+            // Animación para los campos de formulario
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-5px)';
+                    this.parentElement.style.transition = 'all 0.3s ease';
+                });
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Efecto hover para los botones de redes sociales
+            const socialIcons = document.querySelectorAll('.social-icons a');
+            socialIcons.forEach(icon => {
+                icon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) rotate(5deg)';
+                });
+                icon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotate(0)';
+                });
+            });
         });
     </script>
 </body>

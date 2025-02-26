@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('user_type'); // Profesor, Estudiante, Externo
+            $table->string('departamento')->nullable();
+            $table->string('carrera')->nullable();
+            $table->string('matricula')->nullable();
+            $table->string('institucion')->nullable();
+            $table->string('profesion')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

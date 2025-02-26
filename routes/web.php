@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
 Route::middleware('auth')->group(function () {
     Route::post('/upload-document', [DocumentController::class, 'store'])->name('upload.document');
     Route::get('/collection', [CollectionController::class, 'index'])->name('collection');
