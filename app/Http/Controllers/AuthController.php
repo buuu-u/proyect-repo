@@ -45,29 +45,6 @@ class AuthController extends Controller
     // Procesar el registro
     public function register(Request $request)
     {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ];
-
-        // Validaciones específicas por tipo de usuario
-        switch ($request->user_type) {
-            case 'profesor':
-                $rules['departamento'] = 'required|string|max:255';
-                break;
-            case 'estudiante':
-                $rules['carrera'] = 'required|string|max:255';
-                $rules['matricula'] = 'required|string|max:255';
-                break;
-            case 'externo':
-                $rules['institucion'] = 'required|string|max:255';
-                $rules['profesion'] = 'required|string|max:255';
-                break;
-        }
-
-        $request->validate($rules);
-
         // Crear el usuario
         $user = User::create([
             'name' => $request->name,
@@ -81,9 +58,8 @@ class AuthController extends Controller
             'profesion' => $request->profesion ?? null,
         ]);
 
-        Auth::login($user);
-
-        return response()->json(['success' => true, 'message' => '¡Registro exitoso!']);
+        // Redirigir al login en lugar de autenticar
+        return redirect()->route('login')->with('success', '¡Registro exitoso! Ahora puedes iniciar sesión.');
     }
 
     // Cerrar sesión

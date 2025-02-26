@@ -328,6 +328,12 @@
                     <div class="login-container fade-in">
                         <h2 class="login-title">Iniciar Sesión</h2>
 
+                        @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -436,6 +442,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
+
+            // Ocultar el mensaje después de 5 segundos (5000 milisegundos)
+            setTimeout(function() {
+                document.getElementById('success-message').style.display = 'none';
+            }, 5000); // Cambia 5000 a la cantidad de milisegundos que desees
 
             // Animación para los campos de formulario
             const inputs = document.querySelectorAll('.form-control');
