@@ -292,10 +292,7 @@
     <nav class="institutional-nav">
         <div class="container d-flex justify-content-end py-2">
             <ul class="nav">
-                <li class="nav-item"><a href="#" class="nav-link">Noticias</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Iniciar Sesión</a></li>
+                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a></li>
             </ul>
         </div>
     </nav>
@@ -312,7 +309,25 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="register-container fade-in">
+                        <!-- Añadir después del título y antes de las pestañas -->
                         <h2 class="register-title">Únete a Nuestra Comunidad Académica</h2>
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger mb-4">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        @if (session('success'))
+                        <div class="alert alert-success mb-4">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+
                         <ul class="nav nav-tabs" id="registerTabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="profesor-tab" data-bs-toggle="tab" data-bs-target="#profesor" type="button" role="tab" aria-controls="profesor" aria-selected="true">
@@ -334,7 +349,7 @@
                         <div class="tab-content" id="registerTabsContent">
                             <!-- Formulario de Profesor -->
                             <div class="tab-pane fade show active" id="profesor" role="tabpanel" aria-labelledby="profesor-tab">
-                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                <form id="profesorForm" method="POST" action="{{ route('register') }}">
                                     @csrf
                                     <input type="hidden" name="user_type" value="profesor">
                                     <div class="mb-3">
@@ -380,7 +395,7 @@
 
                             <!-- Formulario de Estudiante -->
                             <div class="tab-pane fade" id="estudiante" role="tabpanel" aria-labelledby="estudiante-tab">
-                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                <form id="estudianteForm" method="POST" action="{{ route('register') }}">
                                     @csrf
                                     <input type="hidden" name="user_type" value="estudiante">
                                     <div class="mb-3">
@@ -433,7 +448,7 @@
 
                             <!-- Formulario de Usuario Externo -->
                             <div class="tab-pane fade" id="externo" role="tabpanel" aria-labelledby="externo-tab">
-                                <form id="registerForm" method="POST" action="{{ route('register') }}">
+                                <form id="externoForm" method="POST" action="{{ route('register') }}">
                                     @csrf
                                     <input type="hidden" name="user_type" value="externo">
                                     <div class="mb-3">
@@ -528,17 +543,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const forms = document.querySelectorAll('form');
-
             // Animación para los campos de formulario
             const inputs = document.querySelectorAll('.form-control');
             inputs.forEach(input => {
                 input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'translateY(-5px)';
-                    this.parentElement.style.transition = 'all 0.3s ease';
+                    if (this.parentElement) {
+                        this.parentElement.style.transform = 'translateY(-5px)';
+                        this.parentElement.style.transition = 'all 0.3s ease';
+                    }
                 });
                 input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'translateY(0)';
+                    if (this.parentElement) {
+                        this.parentElement.style.transform = 'translateY(0)';
+                    }
                 });
             });
 
@@ -553,23 +570,20 @@
                 });
             });
 
-            // Animación suave para cambiar entre pestañas
-            const tabLinks = document.querySelectorAll('.nav-link');
-            const tabContents = document.querySelectorAll('.tab-pane');
-
+            // Animación suave para cambiar entre pestañas - Versión corregida
+            const tabLinks = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
             tabLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    tabContents.forEach(content => {
-                        content.classList.remove('show', 'active');
-                        content.style.opacity = 0;
-                    });
-                    const target = document.querySelector(this.getAttribute('data-bs-target'));
-                    target.classList.add('show', 'active');
-                    setTimeout(() => {
-                        target.style.opacity = 1;
-                        target.style.transition = 'opacity 0.5s ease-in-out';
-                    }, 50);
+                link.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-bs-target');
+                    if (targetId) {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            setTimeout(() => {
+                                target.style.opacity = 1;
+                                target.style.transition = 'opacity 0.5s ease-in-out';
+                            }, 50);
+                        }
+                    }
                 });
             });
 
@@ -578,12 +592,14 @@
             passwordInputs.forEach(input => {
                 input.addEventListener('input', function() {
                     const form = this.closest('form');
-                    const password = form.querySelector('input[type="password"]');
-                    const confirmPassword = form.querySelector('input[type="password"]:last-of-type');
-                    if (password.value !== confirmPassword.value) {
-                        confirmPassword.setCustomValidity('Las contraseñas no coinciden');
-                    } else {
-                        confirmPassword.setCustomValidity('');
+                    if (form) {
+                        const password = form.querySelector('input[type="password"]');
+                        const confirmPassword = form.querySelector('input[type="password"]:last-of-type');
+                        if (password && confirmPassword && password.value !== confirmPassword.value) {
+                            confirmPassword.setCustomValidity('Las contraseñas no coinciden');
+                        } else if (confirmPassword) {
+                            confirmPassword.setCustomValidity('');
+                        }
                     }
                 });
             });

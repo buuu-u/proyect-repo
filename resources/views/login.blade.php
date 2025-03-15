@@ -302,18 +302,6 @@
 </head>
 
 <body>
-    <!-- Institutional Navigation -->
-    <nav class="institutional-nav">
-        <div class="container d-flex justify-content-end py-2">
-            <ul class="nav">
-                <li class="nav-item"><a href="#" class="nav-link">Noticias</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Iniciar Sesión</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <div class="container">
         <div class="logo-container">
             <img src="/placeholder.svg?height=80&width=300" alt="Logo Repositorio" class="img-fluid">
@@ -384,18 +372,6 @@
 
                         <div class="text-center mt-4">
                             <p>¿No tienes una cuenta? <a href="{{ route('register') }}">Regístrate</a></p>
-                        </div>
-                        <div class="social-login">
-                            <p class="text-center mb-3">O inicia sesión con:</p>
-                            <button class="btn social-login-btn btn-google">
-                                <i class="fab fa-google"></i> Google
-                            </button>
-                            <button class="btn social-login-btn btn-facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </button>
-                            <button class="btn social-login-btn btn-twitter">
-                                <i class="fab fa-twitter"></i> Twitter
-                            </button>
                         </div>
                     </div>
                 </div>

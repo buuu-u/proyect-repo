@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,7 @@
             --hover-color: #1d4b6f;
             --accent-color: #ffd700;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
@@ -30,7 +31,7 @@
             background-color: var(--primary-blue);
             color: white;
             font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 0.5rem 0;
         }
 
@@ -50,14 +51,14 @@
 
         .main-nav {
             background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 0.5rem 0;
             transition: all 0.3s ease;
         }
 
         .main-nav.scrolled {
             padding: 0.25rem 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .main-nav .navbar-brand img {
@@ -86,7 +87,7 @@
         .main-nav .nav-link:focus,
         .main-nav .nav-link.active {
             color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
 
@@ -151,6 +152,7 @@
                 opacity: 0;
                 transform: translate3d(0, 20px, 0);
             }
+
             to {
                 opacity: 1;
                 transform: translate3d(0, 0, 0);
@@ -191,7 +193,7 @@
             height: 100vh;
             min-height: 600px;
             overflow: hidden;
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -209,21 +211,26 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .hero-title {
             font-size: 4rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .hero-subtitle {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .search-form {
@@ -236,12 +243,12 @@
             border-radius: 30px;
             padding: 1rem 1.5rem;
             font-size: 1.1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
 
@@ -256,7 +263,7 @@
 
         .search-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .feature-card {
@@ -277,12 +284,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
 
         .feature-card:hover::before {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .feature-card-content {
@@ -299,7 +306,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .feature-card p {
@@ -312,20 +319,20 @@
             color: white;
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .news-section:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         .news-section h2 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .carousel-item h5 {
@@ -343,7 +350,7 @@
         }
 
         .carousel-indicators button {
-            background-color: rgba(255,255,255,0.5);
+            background-color: rgba(255, 255, 255, 0.5);
             width: 12px;
             height: 12px;
             border-radius: 50%;
@@ -366,10 +373,11 @@
             overflow: hidden;
         }
 
-        .btn-primary:hover, .btn-primary:focus {
+        .btn-primary:hover,
+        .btn-primary:focus {
             background-color: var(--hover-color);
             border-color: var(--hover-color);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
 
@@ -380,7 +388,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: all 0.6s;
         }
 
@@ -389,7 +397,7 @@
         }
 
         .btn-light {
-            background-color: rgba(255,255,255,0.9);
+            background-color: rgba(255, 255, 255, 0.9);
             color: var(--primary-blue);
             border: none;
             padding: 0.75rem 1.5rem;
@@ -405,7 +413,7 @@
             background-color: white;
             color: var(--hover-color);
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-light::before {
@@ -415,7 +423,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: all 0.6s;
         }
 
@@ -437,13 +445,13 @@
         }
 
         .secondary-hero .carousel-caption {
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 2rem;
             border-radius: 10px;
         }
 
         .stats-item {
-            background-color: rgba(255,255,255,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -451,7 +459,7 @@
         }
 
         .stats-item:hover {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
         }
 
@@ -462,9 +470,17 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .floating {
@@ -530,6 +546,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Institutional Navigation -->
     <nav class="institutional-nav">
@@ -538,7 +555,19 @@
                 <li class="nav-item"><a href="#" class="nav-link">Noticias</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Iniciar Sesión</a></li>
+                @auth
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Cerrar Sesión
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @else
+                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
@@ -559,12 +588,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown">Colecciones</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-book"></i> Tesis</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Artículos</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-book-open"></i> Libros</a></li>
-                        </ul>
+                        <a href="{{ route('collection') }}" class="nav-link">Colecciones</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-bs-toggle="dropdown">Comunidades</a>
@@ -598,10 +622,15 @@
         <div class="hero-content">
             <h1 class="hero-title">Repositorio Académico Digital</h1>
             <p class="hero-subtitle">Descubre y comparte conocimiento académico</p>
-            <form class="search-form">
+            <form class="search-form" action="{{ route('search') }}" method="GET">
                 <div class="input-group input-group-lg">
-                    <input type="search" class="form-control search-input" placeholder="Buscar documentos, tesis, artículos...">
+                    <input type="search" name="q" class="form-control search-input" placeholder="Buscar documentos, tesis, artículos...">
                     <button class="btn btn-primary search-btn" type="submit">Buscar</button>
+                </div>
+                <div class="mt-2 text-center">
+                    <a href="{{ route('search.advanced') }}" class="text-white text-decoration-none">
+                        <i class="fas fa-sliders-h me-1"></i> Búsqueda avanzada
+                    </a>
                 </div>
             </form>
         </div>
@@ -753,121 +782,134 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navItems = document.querySelectorAll('.main-nav .nav-item');
-        let clickedItem = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.main-nav .nav-item');
+            let clickedItem = null;
 
-        function closeAllMenus() {
+            function closeAllMenus() {
+                navItems.forEach(item => {
+                    const link = item.querySelector('.nav-link');
+                    const menu = item.querySelector('.dropdown-menu');
+                    if (link) link.classList.remove('active');
+                    if (menu) menu.classList.remove('show');
+                });
+            }
+
+            function openMenu(item) {
+                const link = item.querySelector('.nav-link');
+                const menu = item.querySelector('.dropdown-menu');
+                if (link) link.classList.add('active');
+                if (menu) menu.classList.add('show');
+            }
+
             navItems.forEach(item => {
                 const link = item.querySelector('.nav-link');
                 const menu = item.querySelector('.dropdown-menu');
-                link.classList.remove('active');
-                menu.classList.remove('show');
-            });
-        }
 
-        function openMenu(item) {
-            const link = item.querySelector('.nav-link');
-            const menu = item.querySelector('.dropdown-menu');
-            link.classList.add('active');
-            menu.classList.add('show');
-        }
-
-        navItems.forEach(item => {
-            const link = item.querySelector('.nav-link');
-            const menu = item.querySelector('.dropdown-menu');
-            
-            // Manejar el hover
-            item.addEventListener('mouseenter', function() {
-                if (clickedItem && clickedItem !== item) {
-                    // Si hay un ítem clickeado y no es este, lo cerramos
-                    closeAllMenus();
-                    clickedItem = null;
+                // Si no hay menú desplegable, configurar solo el enlace
+                if (!menu) {
+                    if (link) {
+                        link.addEventListener('click', function(e) {
+                            // No prevenir el comportamiento predeterminado para enlaces sin menú
+                            // para permitir la navegación normal
+                        });
+                    }
+                    return; // Saltar el resto de la configuración para este elemento
                 }
-                openMenu(item);
-            });
 
-            item.addEventListener('mouseleave', function() {
-                if (!clickedItem || clickedItem !== item) {
-                    closeAllMenus();
-                }
-            });
-
-            // Manejar el clic
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                if (clickedItem === item) {
-                    // Si hacemos clic en el mismo ítem, lo cerramos
-                    closeAllMenus();
-                    clickedItem = null;
-                } else {
-                    // Si hacemos clic en un nuevo ítem, cerramos el anterior y abrimos este
-                    closeAllMenus();
+                // Manejar el hover
+                item.addEventListener('mouseenter', function() {
+                    if (clickedItem && clickedItem !== item) {
+                        // Si hay un ítem clickeado y no es este, lo cerramos
+                        closeAllMenus();
+                        clickedItem = null;
+                    }
                     openMenu(item);
-                    clickedItem = item;
-                }
-            });
-        });
+                });
 
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.main-nav')) {
-                closeAllMenus();
-                clickedItem = null;
-            }
-        });
+                item.addEventListener('mouseleave', function() {
+                    if (!clickedItem || clickedItem !== item) {
+                        closeAllMenus();
+                    }
+                });
 
-        // Animación para las estadísticas
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
+                // Manejar el clic
+                if (link) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statsItems = entry.target.querySelectorAll('.stats-item strong');
-                    statsItems.forEach(item => {
-                        const finalValue = parseInt(item.innerText.replace(/\D/g,''));
-                        animateValue(item, 0, finalValue, 2000);
+                        if (clickedItem === item) {
+                            // Si hacemos clic en el mismo ítem, lo cerramos
+                            closeAllMenus();
+                            clickedItem = null;
+                        } else {
+                            // Si hacemos clic en un nuevo ítem, cerramos el anterior y abrimos este
+                            closeAllMenus();
+                            openMenu(item);
+                            clickedItem = item;
+                        }
                     });
-                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
 
-        const statsSection = document.querySelector('.feature-card:last-child');
-        if (statsSection) {
-            observer.observe(statsSection);
-        }
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.main-nav')) {
+                    closeAllMenus();
+                    clickedItem = null;
+                }
+            });
 
-        // Efecto de scroll en la navegación principal
-        const mainNav = document.querySelector('.main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                mainNav.classList.add('scrolled');
-            } else {
-                mainNav.classList.remove('scrolled');
+            // Animación para las estadísticas
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
             }
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const statsItems = entry.target.querySelectorAll('.stats-item strong');
+                        statsItems.forEach(item => {
+                            const finalValue = parseInt(item.innerText.replace(/\D/g, ''));
+                            animateValue(item, 0, finalValue, 2000);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const statsSection = document.querySelector('.feature-card:last-child');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+
+            // Efecto de scroll en la navegación principal
+            const mainNav = document.querySelector('.main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    mainNav.classList.add('scrolled');
+                } else {
+                    mainNav.classList.remove('scrolled');
+                }
+            });
         });
-    });
     </script>
 </body>
-</html>
 
+</html>

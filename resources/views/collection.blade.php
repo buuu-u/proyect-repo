@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
             --text-dark: #333;
             --text-light: #6c757d;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-light);
@@ -29,7 +30,7 @@
             background-color: var(--primary-blue);
             color: white;
             font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .institutional-nav .nav-link {
@@ -48,14 +49,14 @@
 
         .main-nav {
             background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 0.5rem 0;
             transition: all 0.3s ease;
         }
 
         .main-nav.scrolled {
             padding: 0.25rem 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .main-nav .navbar-brand img {
@@ -80,12 +81,12 @@
         .main-nav .nav-link.active {
             color: white;
             background-color: var(--primary-blue);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
 
         .hero-section {
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -111,6 +112,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -127,12 +129,12 @@
             border-radius: 30px;
             padding: 1rem 1.5rem;
             font-size: 1.1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
 
@@ -147,21 +149,21 @@
 
         .search-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .collection-card {
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             height: 100%;
         }
 
         .collection-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .collection-card img {
@@ -204,10 +206,11 @@
             transition: all 0.3s ease;
         }
 
-        .btn-primary:hover, .btn-primary:focus {
+        .btn-primary:hover,
+        .btn-primary:focus {
             background-color: var(--hover-color);
             border-color: var(--hover-color);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
 
@@ -215,7 +218,7 @@
             background-color: white;
             border-radius: 10px;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
         }
 
@@ -327,6 +330,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Institutional Navigation -->
     <nav class="institutional-nav">
@@ -335,7 +339,19 @@
                 <li class="nav-item"><a href="#" class="nav-link">Noticias</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Iniciar Sesión</a></li>
+                @auth
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Cerrar Sesión
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @else
+                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
@@ -349,10 +365,10 @@
                 </a>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link">Inicio</a>
+                        <a href="/" class="nav-link">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="colecciones.html" class="nav-link active">Colecciones</a>
+                        <a href="/collection" class="nav-link active">Colecciones</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">Comunidades</a>
@@ -373,9 +389,9 @@
         <div class="container text-center">
             <h1 class="hero-title">Explora Nuestras Colecciones</h1>
             <p class="hero-subtitle">Descubre una amplia gama de recursos académicos y de investigación</p>
-            <form class="search-form">
+            <form class="search-form" action="{{ route('collection') }}" method="GET">
                 <div class="input-group input-group-lg">
-                    <input type="search" class="form-control search-input" placeholder="Buscar en las colecciones...">
+                    <input type="search" name="search" class="form-control search-input" placeholder="Buscar en las colecciones..." value="{{ request('search') }}">
                     <button class="btn btn-primary search-btn" type="submit">Buscar</button>
                 </div>
             </form>
@@ -385,80 +401,80 @@
     <!-- Main Content -->
     <main class="container">
         <div class="row">
-            <!-- Filters Sidebar -->
             <div class="col-md-3">
                 <div class="filters">
                     <h4>Filtros</h4>
-                    <div class="mb-3">
-                        <h5 class="h6">Tipo de Documento</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterTesis">
-                            <label class="form-check-label" for="filterTesis">
-                                Tesis
-                            </label>
+                    <form id="filter-form" action="{{ route('collection') }}" method="GET">
+                        <!-- Mantener la búsqueda actual si existe -->
+                        @if(request('search'))
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+
+                        <div class="mb-3">
+                            <h5 class="h6">Categorías</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="1" id="filterCat1"
+                                    {{ in_array(1, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat1">
+                                    Áreas de Grado
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="2" id="filterCat2"
+                                    {{ in_array(2, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat2">
+                                    Tesis
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="3" id="filterCat3"
+                                    {{ in_array(3, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat3">
+                                    Pasantías
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="4" id="filterCat4"
+                                    {{ in_array(4, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat4">
+                                    Prácticas Profesionales
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="5" id="filterCat5"
+                                    {{ in_array(5, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat5">
+                                    Servicios Comunitarios
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    name="category_id[]" value="6" id="filterCat6"
+                                    {{ in_array(6, (array)request('category_id')) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="filterCat6">
+                                    Líneas de Investigación
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterArticulos">
-                            <label class="form-check-label" for="filterArticulos">
-                                Artículos
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterLibros">
-                            <label class="form-check-label" for="filterLibros">
-                                Libros
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h5 class="h6">Año de Publicación</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filter2023">
-                            <label class="form-check-label" for="filter2023">
-                                2023
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filter2022">
-                            <label class="form-check-label" for="filter2022">
-                                2022
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filter2021">
-                            <label class="form-check-label" for="filter2021">
-                                2021
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h5 class="h6">Facultad</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterIngenieria">
-                            <label class="form-check-label" for="filterIngenieria">
-                                Ingeniería
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterCiencias">
-                            <label class="form-check-label" for="filterCiencias">
-                                Ciencias
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="filterHumanidades">
-                            <label class="form-check-label" for="filterHumanidades">
-                                Humanidades
-                            </label>
-                        </div>
-                    </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+                        <a href="{{ route('collection') }}" class="btn btn-outline-secondary w-100 mt-2">Limpiar Filtros</a>
+                    </form>
                 </div>
             </div>
 
             <!-- Collections Grid -->
             <div class="col-md-9">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <!-- Collection Card 1 -->
+                    <!-- Collection Card 1 - Áreas de Grado -->
+                    @if((!request('category_id') || in_array(1, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Areas de Grado', request('search')) !== false ||
+                    stripos('Organización de los temas de grado para orientar y dar referencia a futuros estudiantes e investigadores.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tesis de Ingeniería">
@@ -472,7 +488,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collection Card 2 -->
+                    @endif
+
+                    <!-- Collection Card 2 - Tesis -->
+                    @if((!request('category_id') || in_array(2, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Tesis', request('search')) !== false ||
+                    stripos('Almacenamiento de tesis de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Artículos Científicos">
@@ -486,7 +507,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collection Card 3 -->
+                    @endif
+
+                    <!-- Collection Card 3 - Pasantías -->
+                    @if((!request('category_id') || in_array(3, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Pasantias', request('search')) !== false ||
+                    stripos('Almacenamiento de pasantías de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Libros Académicos">
@@ -500,7 +526,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collection Card 4 -->
+                    @endif
+
+                    <!-- Collection Card 4 - Prácticas Profesionales -->
+                    @if((!request('category_id') || in_array(4, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Practicas Profesionales', request('search')) !== false ||
+                    stripos('Documentación de prácticas realizadas por los estudiantes en entornos profesionales.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Proyectos de Investigación">
@@ -514,7 +545,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collection Card 5 -->
+                    @endif
+
+                    <!-- Collection Card 5 - Servicios Comunitarios -->
+                    @if((!request('category_id') || in_array(5, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Servicios Comunitarios', request('search')) !== false ||
+                    stripos('Proyectos de servicio comunitario realizados por los estudiantes, destacando el impacto comunitario del departamento.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Recursos Educativos">
@@ -528,7 +564,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collection Card 6 -->
+                    @endif
+
+                    <!-- Collection Card 6 - Líneas de Investigación -->
+                    @if((!request('category_id') || in_array(6, (array)request('category_id'))) &&
+                    (!request('search') || stripos('Lineas de Investigacion', request('search')) !== false ||
+                    stripos('Registro de las líneas de investigación desarrolladas o en desarrollo en el departamento.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
                             <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Revistas Académicas">
@@ -542,24 +583,25 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
 
-                <!-- Pagination -->
-                <nav aria-label="Page navigation" class="mt-4">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Siguiente</a>
-                        </li>
-                    </ul>
-                </nav>
+                <!-- Mensaje cuando no hay resultados -->
+                @if(request('search') &&
+                !(
+                ((!request('category_id') || in_array(1, (array)request('category_id'))) && (stripos('Areas de Grado', request('search')) !== false || stripos('Organización de los temas de grado para orientar y dar referencia a futuros estudiantes e investigadores.', request('search')) !== false)) ||
+                ((!request('category_id') || in_array(2, (array)request('category_id'))) && (stripos('Tesis', request('search')) !== false || stripos('Almacenamiento de tesis de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false)) ||
+                ((!request('category_id') || in_array(3, (array)request('category_id'))) && (stripos('Pasantias', request('search')) !== false || stripos('Almacenamiento de pasantías de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false)) ||
+                ((!request('category_id') || in_array(4, (array)request('category_id'))) && (stripos('Practicas Profesionales', request('search')) !== false || stripos('Documentación de prácticas realizadas por los estudiantes en entornos profesionales.', request('search')) !== false)) ||
+                ((!request('category_id') || in_array(5, (array)request('category_id'))) && (stripos('Servicios Comunitarios', request('search')) !== false || stripos('Proyectos de servicio comunitario realizados por los estudiantes, destacando el impacto comunitario del departamento.', request('search')) !== false)) ||
+                ((!request('category_id') || in_array(6, (array)request('category_id'))) && (stripos('Lineas de Investigacion', request('search')) !== false || stripos('Registro de las líneas de investigación desarrolladas o en desarrollo en el departamento.', request('search')) !== false))
+                )
+                )
+                <div class="alert alert-info mt-4">
+                    No se encontraron colecciones que coincidan con tu búsqueda: "{{ request('search') }}".
+                    <a href="{{ route('collection') }}" class="alert-link">Ver todas las colecciones</a>
+                </div>
+                @endif
             </div>
         </div>
     </main>
@@ -601,55 +643,55 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mainNav = document.querySelector('.main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                mainNav.classList.add('scrolled');
-            } else {
-                mainNav.classList.remove('scrolled');
-            }
-        });
-
-        // Animación para las estadísticas de las colecciones
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statsItems = entry.target.querySelectorAll('.collection-card-stats span');
-                    statsItems.forEach(item => {
-                        const finalValue = parseInt(item.innerText.match(/\d+/)[0]);
-                        animateValue(item.querySelector('span'), 0, finalValue, 2000);
-                    });
-                    observer.unobserve(entry.target);
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainNav = document.querySelector('.main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    mainNav.classList.add('scrolled');
+                } else {
+                    mainNav.classList.remove('scrolled');
                 }
             });
-        }, observerOptions);
 
-        const collectionCards = document.querySelectorAll('.collection-card');
-        collectionCards.forEach(card => {
-            observer.observe(card);
+            // Animación para las estadísticas de las colecciones
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const statsItems = entry.target.querySelectorAll('.collection-card-stats span');
+                        statsItems.forEach(item => {
+                            const finalValue = parseInt(item.innerText.match(/\d+/)[0]);
+                            animateValue(item.querySelector('span'), 0, finalValue, 2000);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const collectionCards = document.querySelectorAll('.collection-card');
+            collectionCards.forEach(card => {
+                observer.observe(card);
+            });
         });
-    });
     </script>
 </body>
-</html>
 
+</html>

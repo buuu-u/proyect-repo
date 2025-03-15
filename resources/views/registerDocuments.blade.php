@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,7 @@
             --success-color: #28a745;
             --error-color: #dc3545;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
@@ -28,7 +29,7 @@
             background-color: var(--primary-blue);
             color: white;
             font-size: 0.875rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .institutional-nav .nav-link {
@@ -65,10 +66,11 @@
             margin-bottom: 2rem;
             text-align: center;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 10px;
             padding: 0.75rem 1rem;
             border: 2px solid #e0e0e0;
@@ -76,7 +78,8 @@
             background-color: #f8f9fa;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: var(--secondary-blue);
             box-shadow: 0 0 0 0.2rem rgba(66, 139, 202, 0.25);
             background-color: white;
@@ -108,12 +111,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
             transition: all 0.6s;
         }
 
@@ -217,8 +218,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fade-in {
@@ -232,15 +240,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Institutional Navigation -->
     <nav class="institutional-nav">
         <div class="container d-flex justify-content-end py-2">
             <ul class="nav">
-                <li class="nav-item"><a href="#" class="nav-link">Noticias</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Iniciar Sesión</a></li>
+                <li class="nav-item"><a href="/" class="nav-link">Inicio</a></li>
             </ul>
         </div>
     </nav>
@@ -258,26 +264,27 @@
                 <div class="col-md-8">
                     <div class="upload-container fade-in">
                         <h2 class="upload-title">Subir Documento</h2>
-                        <form id="uploadForm">
+                        <form id="uploadForm" method="POST" action="{{ route('upload.document') }}" enctype="multipart/form-data">
+                            @csrf <!-- Token CSRF para seguridad -->
                             <div class="mb-4">
                                 <label for="title" class="form-label">Título del Documento</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-heading"></i></span>
-                                    <input type="text" class="form-control" id="title" required>
+                                    <input type="text" class="form-control" id="title" name="title" required>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="author" class="form-label">Autor</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control" id="author" required>
+                                    <input type="text" class="form-control" id="author" name="author" required>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="documentType" class="form-label">Tipo de Documento</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                    <select class="form-select" id="documentType" required>
+                                    <select class="form-select" id="documentType" name="documentType" required>
                                         <option value="">Seleccione el tipo de documento</option>
                                         <option value="area_grado">Área de Grado</option>
                                         <option value="tesis">Tesis</option>
@@ -293,14 +300,14 @@
                                 <label for="abstract" class="form-label">Resumen</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-align-left"></i></span>
-                                    <textarea class="form-control" id="abstract" rows="4" required></textarea>
+                                    <textarea class="form-control" id="abstract" name="abstract" rows="4" required></textarea>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="documentFile" class="form-label">Archivo del Documento</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
-                                    <input type="file" class="form-control" id="documentFile" required>
+                                    <input type="file" class="form-control" id="documentFile" name="documentFile" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
@@ -352,15 +359,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('#uploadForm');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-                console.log('Datos del formulario:', data);
-                // Aquí iría la lógica para enviar los datos al servidor
-                alert('Documento subido exitosamente');
-                form.reset();
-            });
 
             // Animación para los campos de formulario
             const inputs = document.querySelectorAll('.form-control, .form-select');
@@ -387,5 +385,5 @@
         });
     </script>
 </body>
-</html>
 
+</html>

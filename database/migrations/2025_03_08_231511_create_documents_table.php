@@ -6,26 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    // create_documents_table.php
-    public function up()
+    public function up(): void
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('author');
-            $table->text('abstract');
+            $table->text('description')->nullable();
             $table->string('file_path');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('file_type');
+            $table->integer('file_size');
+            $table->integer('views_count')->default(0);
+            $table->integer('downloads_count')->default(0);
+            $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('documents');
