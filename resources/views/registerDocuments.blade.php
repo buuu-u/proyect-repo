@@ -253,7 +253,7 @@
 
     <div class="container">
         <div class="logo-container">
-            <img src="/placeholder.svg?height=80&width=300" alt="Logo Repositorio" class="img-fluid">
+            <img src="{{ asset('udo.jpg') }}" alt="Logo Universidad" height="50">
         </div>
     </div>
 
@@ -264,52 +264,192 @@
                 <div class="col-md-8">
                     <div class="upload-container fade-in">
                         <h2 class="upload-title">Subir Documento</h2>
-                        <form id="uploadForm" method="POST" action="{{ route('upload.document') }}" enctype="multipart/form-data">
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <form id="uploadForm" method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
                             @csrf <!-- Token CSRF para seguridad -->
                             <div class="mb-4">
                                 <label for="title" class="form-label">Título del Documento</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-heading"></i></span>
-                                    <input type="text" class="form-control" id="title" name="title" required>
+                                    <input type="text" class="form-control" id="title" name="title" required value="{{ old('title') }}">
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="author" class="form-label">Autor</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control" id="author" name="author" required>
+                                    <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}">
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <label for="documentType" class="form-label">Tipo de Documento</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                    <select class="form-select" id="documentType" name="documentType" required>
-                                        <option value="">Seleccione el tipo de documento</option>
-                                        <option value="area_grado">Área de Grado</option>
-                                        <option value="tesis">Tesis</option>
-                                        <option value="pasantia">Pasantía</option>
-                                        <option value="proyecto_investigacion">Proyecto de Investigación</option>
-                                        <option value="practicas_profesionales">Prácticas Profesionales</option>
-                                        <option value="servicio_comunitario">Servicio Comunitario</option>
-                                        <option value="lineas_investigacion">Líneas de Investigación</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="abstract" class="form-label">Resumen</label>
+                                <label for="description" class="form-label">Descripción</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-align-left"></i></span>
-                                    <textarea class="form-control" id="abstract" name="abstract" rows="4" required></textarea>
+                                    <textarea class="form-control" id="description" name="description" rows="4">{{ old('description') }}</textarea>
                                 </div>
                             </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="document_type" class="form-label">Tipo de Documento</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                        <select class="form-select" id="document_type" name="document_type" required>
+                                            <option value="">Seleccione el tipo de documento</option>
+                                            <option value="area_grado" {{ old('document_type') == 'area_grado' ? 'selected' : '' }}>Área de Grado</option>
+                                            <option value="tesis" {{ old('document_type') == 'tesis' ? 'selected' : '' }}>Tesis</option>
+                                            <option value="pasantia" {{ old('document_type') == 'pasantia' ? 'selected' : '' }}>Pasantía</option>
+                                            <option value="practicas_profesionales" {{ old('document_type') == 'practicas_profesionales' ? 'selected' : '' }}>Prácticas Profesionales</option>
+                                            <option value="servicio_comunitario" {{ old('document_type') == 'servicio_comunitario' ? 'selected' : '' }}>Servicio Comunitario</option>
+                                            <option value="lineas_investigacion" {{ old('document_type') == 'lineas_investigacion' ? 'selected' : '' }}>Líneas de Investigación</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="category" class="form-label">Categoría</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                        <select class="form-select" id="category" name="category">
+                                            <option value="">Seleccione una categoría</option>
+                                            <option value="Investigación" {{ old('category') == 'Investigación' ? 'selected' : '' }}>Investigación</option>
+                                            <option value="Desarrollo" {{ old('category') == 'Desarrollo' ? 'selected' : '' }}>Desarrollo</option>
+                                            <option value="Innovación" {{ old('category') == 'Innovación' ? 'selected' : '' }}>Innovación</option>
+                                            <option value="Tecnología" {{ old('category') == 'Tecnología' ? 'selected' : '' }}>Tecnología</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mb-4">
-                                <label for="documentFile" class="form-label">Archivo del Documento</label>
+                                <label for="keywords" class="form-label">Palabras Clave</label>
+                                <div id="keywordsContainer">
+                                    <div class="input-group mb-2 keyword-input-group">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <input type="text" class="form-control keyword-input" name="keywords[]" value="{{ old('keywords.0') }}">
+                                        <button type="button" class="btn btn-success add-keyword"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="file" class="form-label">Archivo del Documento</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
-                                    <input type="file" class="form-control" id="documentFile" name="documentFile" required>
+                                    <input type="file" class="form-control" id="file" name="file" required>
+                                </div>
+                                <small class="text-muted">Formatos aceptados: PDF, DOC, DOCX. Tamaño máximo: 10MB</small>
+                            </div>
+
+                            <!-- Sección de metadatos colapsable -->
+                            <div class="mb-4">
+                                <button class="btn btn-outline-secondary w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#metadataFields" aria-expanded="false" aria-controls="metadataFields">
+                                    <span>Metadatos adicionales</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+
+                                <div class="collapse mt-3" id="metadataFields">
+                                    <div class="card card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="director" class="form-label">Director de Tesis</label>
+                                                <input type="text" class="form-control" id="director" name="director" value="{{ old('director') }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="co_director" class="form-label">Co-Director</label>
+                                                <input type="text" class="form-control" id="co_director" name="co_director" value="{{ old('co_director') }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="academic_degree" class="form-label">Grado Académico</label>
+                                                <input type="text" class="form-control" id="academic_degree" name="academic_degree" value="{{ old('academic_degree') }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="institution" class="form-label">Institución</label>
+                                                <input type="text" class="form-control" id="institution" name="institution" value="{{ old('institution') }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="department" class="form-label">Departamento</label>
+                                                <input type="text" class="form-control" id="department" name="department" value="{{ old('department') }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="language" class="form-label">Idioma</label>
+                                                <input type="text" class="form-control" id="language" name="language" value="{{ old('language') ?? 'Español' }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="publication_date" class="form-label">Fecha de Publicación</label>
+                                                <input type="date" class="form-control" id="publication_date" name="publication_date" value="{{ old('publication_date') }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="defense_date" class="form-label">Fecha de Defensa</label>
+                                                <input type="date" class="form-control" id="defense_date" name="defense_date" value="{{ old('defense_date') }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="page_count" class="form-label">Número de Páginas</label>
+                                                <input type="number" class="form-control" id="page_count" name="page_count" value="{{ old('page_count') }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="identifier" class="form-label">Identificador</label>
+                                                <input type="text" class="form-control" id="identifier" name="identifier" value="{{ old('identifier') }}">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="rights" class="form-label">Derechos</label>
+                                            <input type="text" class="form-control" id="rights" name="rights" value="{{ old('rights') }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <!-- Campos específicos para tipos de documentos -->
+                            <div id="tesis_fields" class="document-type-fields" style="display: none;">
+                                <div class="mb-4">
+                                    <label for="level" class="form-label">Nivel</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
+                                        <select class="form-select" id="level" name="level">
+                                            <option value="">Seleccione un nivel</option>
+                                            <option value="Pregrado" {{ old('level') == 'Pregrado' ? 'selected' : '' }}>Pregrado</option>
+                                            <option value="Maestría" {{ old('level') == 'Maestría' ? 'selected' : '' }}>Maestría</option>
+                                            <option value="Doctorado" {{ old('level') == 'Doctorado' ? 'selected' : '' }}>Doctorado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="pasantia_fields" class="document-type-fields" style="display: none;">
+                                <div class="mb-4">
+                                    <label for="company" class="form-label">Empresa</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                        <input type="text" class="form-control" id="company" name="company" value="{{ old('company') }}">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="duration" class="form-label">Duración</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                        <input type="text" class="form-control" id="duration" name="duration" value="{{ old('duration') }}">
+                                    </div>
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="fas fa-cloud-upload-alt"></i> Subir Documento
                             </button>
@@ -324,34 +464,15 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope"></i> contacto@repositorio.edu</li>
-                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Calle Universidad 123, Ciudad</li>
-                    </ul>
+                <div class="col-md-6">
+                    <p>&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> Política de Privacidad</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract"></i> Términos de Uso</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Síguenos</h5>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Política de Privacidad</a>
+                    <a href="#" class="me-3">Términos de Uso</a>
+                    <a href="#">Contacto</a>
                 </div>
             </div>
-            <hr class="mt-4 mb-3">
-            <p class="text-center mb-0">&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -359,6 +480,30 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('#uploadForm');
+            const documentTypeSelect = document.querySelector('#document_type');
+            const documentTypeFields = document.querySelectorAll('.document-type-fields');
+
+            // Función para mostrar/ocultar campos según el tipo de documento
+            function toggleDocumentTypeFields() {
+                const selectedType = documentTypeSelect.value;
+
+                // Ocultar todos los campos específicos
+                documentTypeFields.forEach(field => {
+                    field.style.display = 'none';
+                });
+
+                // Mostrar campos específicos según el tipo seleccionado
+                if (selectedType) {
+                    const specificFields = document.getElementById(selectedType + '_fields');
+                    if (specificFields) {
+                        specificFields.style.display = 'block';
+                    }
+                }
+            }
+
+            // Ejecutar al cargar la página y cuando cambie el tipo de documento
+            toggleDocumentTypeFields();
+            documentTypeSelect.addEventListener('change', toggleDocumentTypeFields);
 
             // Animación para los campos de formulario
             const inputs = document.querySelectorAll('.form-control, .form-select');
@@ -381,6 +526,33 @@
                 icon.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0) rotate(0)';
                 });
+            });
+
+            // Funcionalidad para agregar/eliminar palabras clave
+            const keywordsContainer = document.getElementById('keywordsContainer');
+
+            // Agregar palabra clave
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-keyword') || e.target.parentElement.classList.contains('add-keyword')) {
+                    const btn = e.target.classList.contains('add-keyword') ? e.target : e.target.parentElement;
+                    const newKeywordGroup = document.createElement('div');
+                    newKeywordGroup.className = 'input-group mb-2 keyword-input-group';
+                    newKeywordGroup.innerHTML = `
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <input type="text" class="form-control keyword-input" name="keywords[]" value="">
+                        <button type="button" class="btn btn-danger remove-keyword"><i class="fas fa-minus"></i></button>
+                    `;
+                    keywordsContainer.appendChild(newKeywordGroup);
+                }
+            });
+
+            // Eliminar palabra clave
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-keyword') || e.target.parentElement.classList.contains('remove-keyword')) {
+                    const btn = e.target.classList.contains('remove-keyword') ? e.target : e.target.parentElement;
+                    const inputGroup = btn.closest('.keyword-input-group');
+                    inputGroup.remove();
+                }
             });
         });
     </script>

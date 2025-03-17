@@ -544,6 +544,45 @@
         .social-icons i {
             font-size: 1.2rem;
         }
+
+        .institutional-nav .dropdown-menu {
+            background-color: white;
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            z-index: 1050;
+        }
+
+        .institutional-nav .dropdown-item {
+            color: var(--primary-blue);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .institutional-nav .dropdown-item:hover,
+        .institutional-nav .dropdown-item:focus {
+            background-color: rgba(45, 93, 134, 0.1);
+            color: var(--hover-color);
+        }
+
+        .institutional-nav .dropdown-divider {
+            margin: 0.25rem 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .institutional-nav .nav-link.dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
     </style>
 </head>
 
@@ -556,14 +595,29 @@
                 <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
                 @auth
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Cerrar Sesión
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile') }}">
+                                <i class="fas fa-user me-2"></i>Ver Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
                 </li>
                 @else
                 <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a></li>
@@ -576,33 +630,15 @@
     <nav class="main-nav sticky-top">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center py-2">
-                <a class="navbar-brand" href="#">
-                    <img src="/placeholder.svg?height=50&width=200" alt="Logo Repositorio" height="50">
-                </a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img src="{{ asset('udo.jpg') }}" alt="Logo Universidad" height="50">
+            </a>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown">Inicio</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-home"></i> Página Principal</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-newspaper"></i> Novedades</a></li>
-                        </ul>
+                        <a href="{{ route('home') }}" class="nav-link">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('collection') }}" class="nav-link">Colecciones</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown">Comunidades</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-university"></i> Facultades</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-users"></i> Grupos de Investigación</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown">Investigación</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-project-diagram"></i> Proyectos</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-file-signature"></i> Publicaciones</a></li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-bs-toggle="dropdown">Acerca de</a>
@@ -622,9 +658,9 @@
         <div class="hero-content">
             <h1 class="hero-title">Repositorio Académico Digital</h1>
             <p class="hero-subtitle">Descubre y comparte conocimiento académico</p>
-            <form class="search-form" action="{{ route('search') }}" method="GET">
+            <form class="search-form" action="{{ route('search.advanced') }}" method="GET">
                 <div class="input-group input-group-lg">
-                    <input type="search" name="q" class="form-control search-input" placeholder="Buscar documentos, tesis, artículos...">
+                    <input type="search" name="query" class="form-control search-input" placeholder="Buscar documentos, tesis, artículos...">
                     <button class="btn btn-primary search-btn" type="submit">Buscar</button>
                 </div>
                 <div class="mt-2 text-center">
@@ -703,7 +739,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-light">Explorar recursos <i class="fas fa-search ms-2"></i></a>
+                            <a href="{{ route('search.advanced') }}" class="btn btn-light">Explorar recursos <i class="fas fa-search ms-2"></i></a>
                         </div>
                     </div>
                 </div>
@@ -749,34 +785,15 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope me-2"></i>contacto@repositorio.edu</li>
-                        <li><i class="fas fa-phone me-2"></i>(123) 456-7890</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i>Calle Universidad 123, Ciudad</li>
-                    </ul>
+                <div class="col-md-6">
+                    <p>&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#"><i class="fas fa-shield-alt me-2"></i>Política de Privacidad</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract me-2"></i>Términos de Uso</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle me-2"></i>Preguntas Frecuentes</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Síguenos</h5>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Política de Privacidad</a>
+                    <a href="#" class="me-3">Términos de Uso</a>
+                    <a href="#">Contacto</a>
                 </div>
             </div>
-            <hr class="mt-4 mb-3">
-            <p class="text-center mb-0">&copy; 2023 Repositorio Académico Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 

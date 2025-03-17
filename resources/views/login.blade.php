@@ -304,7 +304,7 @@
 <body>
     <div class="container">
         <div class="logo-container">
-            <img src="/placeholder.svg?height=80&width=300" alt="Logo Repositorio" class="img-fluid">
+            <img src="{{ asset('udo.jpg') }}" alt="Logo Universidad" class="img-fluid" height="50">
         </div>
     </div>
 
@@ -383,34 +383,15 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope"></i> contacto@repositorio.edu</li>
-                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Calle Universidad 123, Ciudad</li>
-                    </ul>
+                <div class="col-md-6">
+                    <p>&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> Política de Privacidad</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract"></i> Términos de Uso</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Síguenos</h5>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Política de Privacidad</a>
+                    <a href="#" class="me-3">Términos de Uso</a>
+                    <a href="#">Contacto</a>
                 </div>
             </div>
-            <hr class="mt-4 mb-3">
-            <p class="text-center mb-0">&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 

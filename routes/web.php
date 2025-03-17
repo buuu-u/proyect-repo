@@ -8,29 +8,19 @@ use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/collection/tesis', function () {
-    return view('tesis');
-});
+// Rutas para los diferentes tipos de documentos
+Route::get('/areas-grado', [DocumentController::class, 'areasGrado'])->name('areas.grado');
+Route::get('/tesis', [DocumentController::class, 'tesis'])->name('tesis');
+Route::get('/pasantias', [DocumentController::class, 'pasantias'])->name('pasantias');
+Route::get('/practicas-profesionales', [DocumentController::class, 'practicasProfesionales'])->name('practicas.profesionales');
+Route::get('/servicios-comunitarios', [DocumentController::class, 'serviciosComunitarios'])->name('servicios.comunitarios');
+Route::get('/lineas-investigacion', [DocumentController::class, 'lineasInvestigacion'])->name('lineas.investigacion');
+Route::get('/document/{id}', [DocumentController::class, 'show'])->name('document.show');
 
-Route::get('/collection/pasantias', function () {
-    return view('pasantias');
-});
-
-Route::get('/collection/area-grado', function () {
-    return view('areasGrado');
-});
-
-Route::get('/collection/practicas-profesionales', function () {
-    return view('practicasProfesionales');
-});
-
-Route::get('/collection/servicios-comunitarios', function () {
-    return view('serviciosComunitarios');
-});
-
-Route::get('/collection/lineas-investigacion', function () {
-    return view('lineasInvestigacion');
-});
+// Añadir la ruta 'about' que falta
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 // Ruta principal
 Route::get('/', function () {
@@ -43,7 +33,17 @@ require __DIR__.'/auth.php';
 // Rutas de vistas simples
 Route::get('register-document', function () {
     return view('registerDocuments');
-});
+})->name('register-document');
+
+// Ruta para mostrar detalles de un documento
+Route::get('/documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
+
+Route::get('/documents/{document}/view', [DocumentController::class, 'view'])->name('documents.view');
+
+// Añadir esta ruta para la descarga
+Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+
+// Route::get('/documents/{document}/share', [DocumentController::class, 'share'])->name('documents.share');
 
 // Rutas protegidas (solo para usuarios autenticados)
 Route::middleware('auth')->group(function () {
@@ -75,4 +75,9 @@ Route::resource('categories', CategoryController::class);
 
 // Rutas para búsqueda
 Route::get('/search', [SearchController::class, 'index'])->name('search');
-Route::get('/search/advanced', [SearchController::class, 'advancedSearch'])->name('search.advanced');
+Route::get('/busqueda-avanzada', [SearchController::class, 'advanced'])->name('search.advanced');
+Route::get('/busqueda/resultados', [SearchController::class, 'results'])->name('search.results');
+
+// Rutas para comentarios
+Route::post('/documents/{document}/comments', [App\Http\Controllers\DocumentController::class, 'storeComment'])->name('documents.comments.store')->middleware('auth');
+Route::delete('/comments/{comment}', [App\Http\Controllers\DocumentController::class, 'deleteComment'])->name('comments.destroy')->middleware('auth');

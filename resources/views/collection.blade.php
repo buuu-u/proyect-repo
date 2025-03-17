@@ -328,6 +328,45 @@
                 height: 150px;
             }
         }
+
+        .institutional-nav .dropdown-menu {
+            background-color: white;
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            z-index: 1050;
+        }
+
+        .institutional-nav .dropdown-item {
+            color: var(--primary-blue);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .institutional-nav .dropdown-item:hover,
+        .institutional-nav .dropdown-item:focus {
+            background-color: rgba(45, 93, 134, 0.1);
+            color: var(--hover-color);
+        }
+
+        .institutional-nav .dropdown-divider {
+            margin: 0.25rem 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .institutional-nav .nav-link.dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
     </style>
 </head>
 
@@ -340,14 +379,29 @@
                 <li class="nav-item"><a href="#" class="nav-link">Eventos</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Ayuda</a></li>
                 @auth
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Cerrar Sesión
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile') }}">
+                                <i class="fas fa-user me-2"></i>Ver Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
                 </li>
                 @else
                 <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a></li>
@@ -360,8 +414,8 @@
     <nav class="main-nav sticky-top">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center py-2">
-                <a class="navbar-brand" href="index.html">
-                    <img src="/placeholder.svg?height=50&width=200" alt="Logo Repositorio" height="50">
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <img src="{{ asset('udo.jpg') }}" alt="Logo Universidad" height="50">
                 </a>
                 <ul class="nav">
                     <li class="nav-item">
@@ -369,12 +423,6 @@
                     </li>
                     <li class="nav-item">
                         <a href="/collection" class="nav-link active">Colecciones</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Comunidades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Investigación</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">Acerca de</a>
@@ -477,7 +525,9 @@
                     stripos('Organización de los temas de grado para orientar y dar referencia a futuros estudiantes e investigadores.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tesis de Ingeniería">
+                            <a href="{{ route('areas.grado') }}">
+                                <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tesis de Ingeniería">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Áreas de Grado</h5>
                                 <p class="collection-card-text">Organización de los temas de grado para orientar y dar referencia a futuros estudiantes e investigadores.</p>
@@ -485,6 +535,7 @@
                                     <span><i class="fas fa-file-alt"></i> 1,234 documentos</span>
                                     <span><i class="fas fa-eye"></i> 5,678 vistas</span>
                                 </div>
+                                <a href="{{ route('areas.grado') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -496,7 +547,9 @@
                     stripos('Almacenamiento de tesis de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Artículos Científicos">
+                            <a href="{{ route('tesis') }}">
+                                <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Artículos Científicos">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Tesis</h5>
                                 <p class="collection-card-text">Almacenamiento de tesis de los estudiantes, con información detallada y fácil acceso para consultas académicas.</p>
@@ -504,6 +557,7 @@
                                     <span><i class="fas fa-file-alt"></i> 2,345 documentos</span>
                                     <span><i class="fas fa-eye"></i> 7,890 vistas</span>
                                 </div>
+                                <a href="{{ route('tesis') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -515,7 +569,9 @@
                     stripos('Almacenamiento de pasantías de los estudiantes, con información detallada y fácil acceso para consultas académicas.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Libros Académicos">
+                            <a href="{{ route('pasantias') }}">
+                                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Libros Académicos">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Pasantías</h5>
                                 <p class="collection-card-text">Almacenamiento de pasantías de los estudiantes, con información detallada y fácil acceso para consultas académicas.</p>
@@ -523,6 +579,7 @@
                                     <span><i class="fas fa-file-alt"></i> 567 documentos</span>
                                     <span><i class="fas fa-eye"></i> 3,456 vistas</span>
                                 </div>
+                                <a href="{{ route('pasantias') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -534,7 +591,9 @@
                     stripos('Documentación de prácticas realizadas por los estudiantes en entornos profesionales.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Proyectos de Investigación">
+                            <a href="{{ route('practicas.profesionales') }}">
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Proyectos de Investigación">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Prácticas Profesionales</h5>
                                 <p class="collection-card-text">Documentación de prácticas realizadas por los estudiantes en entornos profesionales.</p>
@@ -542,6 +601,7 @@
                                     <span><i class="fas fa-file-alt"></i> 789 documentos</span>
                                     <span><i class="fas fa-eye"></i> 4,567 vistas</span>
                                 </div>
+                                <a href="{{ route('practicas.profesionales') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -553,7 +613,9 @@
                     stripos('Proyectos de servicio comunitario realizados por los estudiantes, destacando el impacto comunitario del departamento.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Recursos Educativos">
+                            <a href="{{ route('servicios.comunitarios') }}">
+                                <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Recursos Educativos">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Servicios Comunitarios</h5>
                                 <p class="collection-card-text">Proyectos de servicio comunitario realizados por los estudiantes, destacando el impacto comunitario del departamento.</p>
@@ -561,6 +623,7 @@
                                     <span><i class="fas fa-file-alt"></i> 1,234 documentos</span>
                                     <span><i class="fas fa-eye"></i> 6,789 vistas</span>
                                 </div>
+                                <a href="{{ route('servicios.comunitarios') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -572,7 +635,9 @@
                     stripos('Registro de las líneas de investigación desarrolladas o en desarrollo en el departamento.', request('search')) !== false))
                     <div class="col">
                         <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Revistas Académicas">
+                            <a href="{{ route('lineas.investigacion') }}">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Revistas Académicas">
+                            </a>
                             <div class="collection-card-body">
                                 <h5 class="collection-card-title">Líneas de Investigación</h5>
                                 <p class="collection-card-text">Registro de las líneas de investigación desarrolladas o en desarrollo en el departamento.</p>
@@ -580,6 +645,7 @@
                                     <span><i class="fas fa-file-alt"></i> 890 documentos</span>
                                     <span><i class="fas fa-eye"></i> 5,678 vistas</span>
                                 </div>
+                                <a href="{{ route('lineas.investigacion') }}" class="btn btn-primary w-100 mt-3">Ver colección</a>
                             </div>
                         </div>
                     </div>
@@ -610,34 +676,15 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <ul>
-                        <li><i class="fas fa-envelope me-2"></i>contacto@repositorio.edu</li>
-                        <li><i class="fas fa-phone me-2"></i>(123) 456-7890</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i>Calle Universidad 123, Ciudad</li>
-                    </ul>
+                <div class="col-md-6">
+                    <p>&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
                 </div>
-                <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-shield-alt me-2"></i>Política de Privacidad</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract me-2"></i>Términos de Uso</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle me-2"></i>Preguntas Frecuentes</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Síguenos</h5>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Política de Privacidad</a>
+                    <a href="#" class="me-3">Términos de Uso</a>
+                    <a href="#">Contacto</a>
                 </div>
             </div>
-            <hr class="mt-4 mb-3">
-            <p class="text-center mb-0">&copy; 2025 Repositorio Académico Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 
